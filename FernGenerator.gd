@@ -2,38 +2,37 @@
 extends EditorScript
 
 # Overall Gen
-const NUM_BUSHES = 10
+const NUM_BUSHES = 15
 
 # Bush Gen
-const MIN_NUM_LEAVES = 9; const MAX_NUM_LEAVES = 12
+const MIN_NUM_LEAVES = 7; const MAX_NUM_LEAVES = 10
 
 # Leaf Gen
-const MIN_SIZE_MOD = 0.6; const MAX_SIZE_MOD = 1.2;
-const MAX_COLOR_ADJUSTMENT = 0.15;
-const MIN_WIDTH = 3.0; const MAX_WIDTH = 3.75;
+const MIN_SIZE_MOD = 0.5; const MAX_SIZE_MOD = 1.15;
+const MAX_COLOR_ADJUSTMENT = 0.23;
+const MIN_WIDTH = 2.5; const MAX_WIDTH = 4.25;
 const MIN_NUM_SEGMENTS = 8; const MAX_NUM_SEGMENTS = 12;
-const EXTRA_TALL_CHANCE = 0.025
-const MIN_SEGMENT_LENGTH = 3.5; const MAX_SEGMENT_LENGTH = 5.5;
+const EXTRA_TALL_CHANCE = 0.03
+const MIN_SEGMENT_LENGTH = 2; const MAX_SEGMENT_LENGTH = 4.0;
 const MIN_EXTRA_TALL_MOD = 1.25; const MAX_EXTRA_TALL_MOD = 1.6;
-const MAX_POSITION_OFFSET = 2.0;
+const MAX_POSITION_OFFSET = 3.0;
 const ANGLE_D1_MAX = PI/16; const ANGLE_D2_MAX = PI/64;
 
 var leafScene : PackedScene = load("res://leaf.tscn")
-var leafParent : Node2D
 
 # Called when the script is executed (using File -> Run in Script Editor).
 func _run():
-	leafParent = get_scene().find_child("LeafParent")
-	for child in leafParent.get_children():
-		child.free()
-	
-	for i in NUM_BUSHES:
-		GenerateBush(leafParent.global_position + (Vector2.RIGHT * i * 8.0))
+	var leafParent = get_scene().find_child("LeafParent")
+	for subParent in leafParent.get_children():
+		for child in subParent.get_children():
+			child.free()
+		for i in NUM_BUSHES:
+			GenerateBush(subParent.global_position + (Vector2.RIGHT * i * 7.0), subParent)
 
-func GenerateBush(startingPosition : Vector2):
+func GenerateBush(startingPosition : Vector2, parent : Node2D):
 	var bushParent : Node2D = Node2D.new()
-	leafParent.add_child(bushParent, true)
-	leafParent.move_child(bushParent, randi_range(0, leafParent.get_child_count() - 1)) # randomly order
+	parent.add_child(bushParent, true)
+	parent.move_child(bushParent, randi_range(0, parent.get_child_count() - 1)) # randomly order
 	bushParent.owner = get_scene()
 	
 	var numLeaves = randi_range(MIN_NUM_LEAVES, MAX_NUM_LEAVES)
@@ -81,7 +80,7 @@ func GenerateBush(startingPosition : Vector2):
 		
 		leaf.points = points
 
-func GenerateLeaf(parent : Node2D = leafParent) -> Line2D:
+func GenerateLeaf(parent : Node2D) -> Line2D:
 	var leaf = leafScene.instantiate()
 	parent.add_child(leaf);
 	leaf.owner = get_scene()

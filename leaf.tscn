@@ -19,12 +19,12 @@ shader = ExtResource("1_skkix")
 shader_parameter/noise = SubResource("NoiseTexture2D_2tuiu")
 
 [sub_resource type="Curve" id="Curve_q15y6"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.496599, 0.784232), 0.0, 0.0, 0, 0, Vector2(0.689342, 0.76805), 0.0, 0.0, 0, 0, Vector2(1, 0.10989), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.496599, 0.784232), 0.0, 0.0, 0, 0, Vector2(0.791383, 0.716424), 0.0, 0.0, 0, 0, Vector2(1, 0.321642), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Gradient" id="Gradient_itjpb"]
 offsets = PackedFloat32Array(0, 0.40399, 1)
-colors = PackedColorArray(0.0943033, 0.178897, 0.0964592, 1, 0.26179, 0.445545, 0.175778, 1, 0.262745, 0.447059, 0.176471, 1)
+colors = PackedColorArray(0.0943033, 0.178897, 0.0964592, 1, 0.2565, 0.57, 0.1938, 1, 0.254902, 0.568627, 0.192157, 1)
 
 [node name="Leaf" type="Line2D"]
 material = SubResource("ShaderMaterial_idnbf")
